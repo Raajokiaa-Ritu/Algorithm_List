@@ -6,24 +6,24 @@ using namespace std;
 #define pii pair<int,int>
 
 
-int i,j,node,edge,u,v,w,wgt,cost;
-int source = 0;//Starting point of Traversal
 
-unordered_map<int,vector<pii>>Graph;
+int i,j,node,edge,u,v,w,wgt,cost;
+int source,destination;//Starting point of Traversal
+
+
+vector<pair<int,int>>Graph[100005];
 priority_queue<pii,vector<pii>,greater<pii>>PQ; //Min Heap
 
-vector<bool>Visited;
-vector<int>Path;
+
+vector<int>Parent;
 vector<int>Dist;
 
 void init()
 {
-	Visited.assign(node+1,false);
-	Path.assign(node+1,-1);
+
+	Parent.assign(node+1,-1);
 	Dist.assign(node+1,inf);
 
-	//for sourse node
-	Visited[source] = true;
 	Dist[source]    = 0;
 
 }
@@ -39,8 +39,8 @@ void Dijkstra()
 		cost = PQ.top().first;
 		u    = PQ.top().second;
 		PQ.pop();				
-
-		for(auto child : Graph[u])
+        
+        for(auto child : Graph[u])
 		{
 			v   = child.first;
 			wgt = child.second;
@@ -48,7 +48,7 @@ void Dijkstra()
 			if(cost + wgt < Dist[v])
 			{
 				Dist[v] = cost+wgt;
-				Path[v] = u;
+				Parent[v] = u;
 				PQ.push({Dist[v],v}); //distance,node
 			}
 		}
@@ -59,30 +59,30 @@ void Dijkstra()
 void Print_Shortest_Path()
 {
 	cout<<"Distance from source: \n";
-	for(i=1;i<=node;i++)
+	for(i=1;i<node;i++)
 		cout<<source<<"->"<<i<<" : "<<Dist[i]<<'\n';
 	cout<<endl;
-	vector<int>parent;
-	int target = node;
-	while(target != -1)
-	{
-		parent.push_back(target);
-		target = Path[target];
-	}
 
-	reverse(parent.begin(),parent.end());
-	for(auto it:parent)cout<<it<<' ';
+	vector<int>Path;
+	int target = destination;
+	while(target != source)
+	{
+		Path.push_back(target);
+		target = Parent[target];
+	}
+    Path.push_back(source);
+    
+    cout<<"Shortest Path from "<<source<<" to "<<destination<<":"<<endl;
+	reverse(Path.begin(),Path.end());
+	for(auto it:Path)cout<<it<<' ';
 
 }
 
 int main()
 {
-#ifndef ONLINE_JUDGE
-	freopen("input.txt","r",stdin);
-	freopen("output.txt","w",stdout);
-#endif
 
 	cin>>node>>edge;
+	cin>>source>>destination;
 
 	for(i=0;i<edge;i++)
 	{		
@@ -95,8 +95,11 @@ int main()
 	Print_Shortest_Path();
 
 /*
-9 14
-0 1 4
+
+input:this input is taken from gfg
+9 14  ->(node,edge)
+7 3   ->(source,destination)
+0 1 4 ->(u,v,w)-->all edges
 0 7 8
 1 2 8
 1 7 11
@@ -110,5 +113,21 @@ int main()
 6 7 1
 6 8 6
 7 8 7
+
+
+output:
+Distance from source: 
+7->1 : 11
+7->2 : 7
+7->3 : 14
+7->4 : 13
+7->5 : 3
+7->6 : 1
+7->7 : 0
+7->8 : 7
+
+Shortest Path from 7 to 3
+7 6 5 2 3 
+
 */
 }
