@@ -5,15 +5,6 @@ using namespace std;
 int i,j,n,m,e,s,key;
 int a[10000];
 
-void input()
-{
-	cin>>n;
-	for(i=0;i<n;i++)
-	{
-		cin>>a[i];
-	}
-}
-
 void insertion_sort()
 {
 	for(j=1;j<n;j++)
@@ -30,24 +21,12 @@ void insertion_sort()
 	}
 }
 
-void output()
-{
-	for(i=0;i<n;i++)
-	{
-		cout<<a[i]<<' ';
-	}
-}
-
 int main()
 {
-#ifndef ONLINE_JUDGE
-	freopen("input.txt","r",stdin);
-	freopen("output.txt","w",stdout);
-#endif
+   cin>>n;
+   for(i=0;i<n;i++)cin>>a[i];
 
-   input();
    insertion_sort();
-   output();
 
-
+   for(i=0;i<n;i++)cout<<a[i]<<' ';
 }
