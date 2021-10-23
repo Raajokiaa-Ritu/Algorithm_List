@@ -10,7 +10,6 @@ int u,v,w,a,b;
 unordered_map<int,int>parent;
 vector<pii> mstset;
 
-vector<pair<int,int>>Graph[1000];
 priority_queue<pii,vector<pii>,greater<pii>>pq;
 
 void make_set(int n)
