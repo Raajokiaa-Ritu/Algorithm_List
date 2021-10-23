@@ -2,48 +2,54 @@
 using namespace std;
 #define pb push_back
 
-int i,j,n,m,e,sum=0,mid;
-int left_sum=0,right_sum=0,cross_sum=0;
+int i,j,n,m,e,sum=0;
+int leftSum=0,rightSum=0,crossSum=0;
 
-int max(int a, int b) { return (a > b) ? a : b; }
-
-int max(int a, int b, int c) { return max(max(a, b), c); }
-
-int maxCrossingSum(int arr[], int l, int m, int h)
+int max_cross_sum(int arry[],int low,int mid,int high)
 {
-	sum = 0;
-	left_sum = INT_MIN;
+	int left = INT_MIN;
+	sum=0;
 
-	for (int i = m; i >= l; i--) {
-		sum  += arr[i];
-		if (sum > left_sum)
-			left_sum = sum;
-	}
-	
-	sum = 0;
-    right_sum = INT_MIN;
-
-	for (int i = m + 1; i <= h; i++) {
-		sum  += arr[i];
-		if (sum > right_sum)
-			right_sum = sum;
+	for(i=mid;i>=low;i--)
+	{
+		sum +=arry[i];
+		if(sum > left)
+		{
+			left= sum;
+		}else break;
 	}
 
-	return max(left_sum + right_sum, left_sum, right_sum);
+
+	int right = INT_MIN;
+	sum=0;
+	for(i=mid+1;i<=high;i++)
+	{
+		sum += arry[i];
+		if(sum>right)
+		{
+			right = sum;
+		}else break;
+	}
+
+	return left+right;
 }
-int maxSubArraySum(int arr[], int l, int h)
+
+int max_sum_subarray(int ar[],int l,int h)
 {
-	if (l == h)
-		return arr[l];
 
-	int m = (l + h) / 2;
+	if(l == h)return ar[l];	
+	int m = (l+h)/2;
 
-	left_sum = maxSubArraySum(arr,l,m);
-	right_sum = maxSubArraySum(arr,m+1,h);
-	cross_sum = maxCrossingSum(arr,l,m,h);
+   /*
+       leftSum  = max_sum_subarray(ar,l,m);
+       rightSum = max_sum_subarray(ar,m+1,h);
+       crossSum = max_cross_sum(ar,l,m,h);
 
-	return max(left_sum,right_sum,cross_sum);
-
+       return max(leftSum,max(rightSum,crossSum));
+    */
+    
+    return max(max_sum_subarray(ar,l,m),max(max_sum_subarray(ar,m+1,h),max_cross_sum(ar,l,m,h)));
+	
 }
 
 int main()
@@ -54,11 +60,18 @@ int main()
 #endif
 
 	cin>>n;
-	int array[n+1];
+	int arry[n+1];
+	for(i=0;i<n;i++)cin>>arry[i];
 
-	for(i=0;i<n;i++)
-		cin>>array[i];
-
-    sum = maxSubArraySum(array,0,n-1);
-    cout<<sum<<endl;
+	cout<<"max sum : "<<max_sum_subarray(arry,0,n-1)<<endl;
 }
+/*
+input : 
+5
+5 -4 -3 -2 -1
+
+
+output:
+max sum : 5
+
+*/
