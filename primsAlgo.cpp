@@ -1,80 +1,117 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define   pb      push_back
-#define   inf     10000
+#define   inf     1e9
 #define   pii     pair<int,int>
 #define   f       first
 #define   s       second
 
-int i,j,n,m,e,s,wgt,u,v,w;
-int cost,node,minCost=0,node1;
+int i,node,edges,u,v,w;
+int cost,minCost=0,source,destination;
 
-vector<int>p;  //parent
-vector<int>d;  //distance
-vector<bool>visit; //visited node of mst set
-unordered_map<int,vector<pii>>g; //graph nilam
-priority_queue<pii,vector<pii>,greater<pii>>pq; //min heap (distance,node)
+vector<int>SelectedNodes;
+
+vector<int>Parent;  //parent
+vector<int>Dist;  //distance
+vector<bool>visited; //visited node of mst set
+
+vector<pii>Graph[1000];
+priority_queue<pii,vector<pii>,greater<pii>>PQ; //min heap (distance,node)
 
 void init()
 {
-  visit.assign(n,false);
-  d.assign(n,inf);
-  p.assign(n,-1);
-  d[0] = 0;
-  p[0] = -1;
-  visit[0] = true;
+  Parent.assign(node+1,-1);
+  Dist.assign(node+1,inf);
+  visited.assign(node+1,false);
+
+  Dist[source] = 0;
+
 }
 
 void prims_mst()
 {
-	pq.push({0,0}); //(distance,node)
-	while(!pq.empty())
+	init();
+	PQ.push({Dist[source],source});//(distance,node)
+	
+	while(!PQ.empty())
 	{
-		cost = pq.top().f;  // wgt of node u
-		u    = pq.top().s;  //node u
-        pq.pop();
+		cost = PQ.top().first;
+		u    = PQ.top().second;
 
-    if(!visit[u]) minCost+=cost;
-        visit[u]=true;
-       
-		for(auto child: g[u])
+		PQ.pop();
+		
+		if(visited[u] == false){
+			minCost+=cost;
+			SelectedNodes.pb(u);
+		}
+		visited[u]=true;
+
+		vector<pair<int,int>>::iterator it;
+		for(it=Graph[u].begin();it!=Graph[u].end();it++)
 		{
-			v = child.f; //node v
-			w = child.s; // wgt of u--->v
-			if(visit[v]==false && d[v] >w)
+			v = it->first;
+			w = it->second; //wgt of u --> v
+
+			if(visited[v]==false && Dist[v] >w)
 			{
-				d[v] = w;
-				p[v] = u;
-				pq.push({d[v],v});
+
+				Dist[v] = w;
+				Parent[v] = u;
+				PQ.push({Dist[v],v});
 			}
 		}
+
 	}
+
 }
 void print_mst()
 {
 	cout<<"minCost = "<<minCost<<endl;
-	cout<<"path    : ";
-	for(i=0;i<n;i++)cout<<p[i]<<' ';cout<<endl;
-	cout<<"distance: ";
-	for(i=0;i<n;i++)cout<<d[i]<<' ';cout<<endl;
+    
+    cout<<"\nNode serial : ";
+    for(auto it:SelectedNodes)cout<<it<<' ';cout<<endl;
+
+	cout<<"\nMST SET :\n";
+	for(auto it:SelectedNodes)
+	{
+		cout<<it<<" - "<<Parent[it]<<" : "<<Dist[it]<<endl;
+	}
+    
+
+    cout<<"\nPath from "<<source<<" to "<<destination<<" : "; 
+	int target = destination;
+	vector<int>path;
+	while(target != source)
+	{
+		path.push_back(target);
+		target = Parent[target];
+	}
+	path.push_back(source);
+
+	reverse(path.begin(),path.end());
+	for(auto it:path)cout<<it<<' ';
+	
+	cout<<"\nCost :";
+	int sum=0;
+	for(auto it:path)
+	{
+		sum += Dist[it];
+	}		
+	cout<<sum<<endl;
 }
 
 int main()
 {
-#ifndef ONLINE_JUDGE
-	freopen("input.txt","r",stdin);
-	freopen("output.txt","w",stdout);
-#endif
-
-	cin>>n>>e;
-	init();
-	for(i=0;i<e;i++)
+	cin>>node>>edges;
+	cin>>source>>destination;
+	
+	for(i=0;i<edges;i++)
 	{
 	 cin>>u>>v>>w;
-	 g[u].pb({v,w});
-	 g[v].pb({u,w}); //undirected graph
+	 Graph[u].pb({v,w});
+	 Graph[v].pb({u,w}); //undirected graph
 	}
-   prims_mst();
-   print_mst();
+    prims_mst();
+    print_mst();
 
 }
