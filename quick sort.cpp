@@ -1,6 +1,5 @@
 #include<bits/stdc++.h>
 using namespace std;
-#define pb push_back
 
 int i,j,high,low,pivot,l,r,n;
 
@@ -35,11 +34,6 @@ void QuickSort(int arry[], int low,int high)
 
 int main()
 {
-#ifndef ONLINE_JUDGE
-   freopen("input.txt","r",stdin);
-   freopen("output.txt","w",stdout);
-#endif
-
    cin>>n;
    for(i=0;i<n;i++)cin>>arry[i];
 
