@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define  pb  push_back
-#define  mx  1000
+#define  mx  100000
 
 int i,j,n,m,e,s;
 int arr[mx];
@@ -37,23 +37,13 @@ void heapsort(int arr[], int n)
     }
 }
 
-void input()
-{
-	for(i=0;i<n;i++)cin>>arr[i];
-}
-void output()
-{
-	for(i=0;i<n;i++)cout<<arr[i]<<' ';
-}
+
 int main()
 {
-#ifndef ONLINE_JUDGE
-	freopen("input.txt","r",stdin);
-	freopen("output.txt","w",stdout);
-#endif
 
 	cin>>n;
-	input();
+	
+        for(i=0;i<n;i++)cin>>arr[i];
 	heapsort(arr,n);
-	output();
+	for(i=0;i<n;i++)cout<<arr[i]<<' ';
 }
