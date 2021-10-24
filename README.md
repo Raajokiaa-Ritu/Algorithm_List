@@ -15,9 +15,9 @@
 
 7.LCS(Length + print_lcs)
 
-8.Matrix chain multiplication(-find cost)
+8.0/1 Knapsack(optimal profit)
 
-9.0/1 Knapsack(optimal profit)
+9.Matrix chain multiplication(find cost) 
 
 10.Fractional Knapsack(profit + solution vector)
 
