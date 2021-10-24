@@ -53,17 +53,13 @@ void knapsack(int n,int capacity)
 
 int main()
 {
-#ifndef ONLINE_JUDGE
-	freopen("input.txt","r",stdin);
-	freopen("output.txt","w",stdout);
-#endif
 
 	cin>>n>>capacity;
 	for(i=1;i<=n;i++)cin>>weight[i];
 
 	for(i=1;i<=n;i++)cin>>profit[i];
 
-    knapsack(n,capacity);
+        knapsack(n,capacity);
 
 
 
