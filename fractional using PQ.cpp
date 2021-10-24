@@ -62,10 +62,29 @@ int main()
     
     
     cout<<"TotalProfit : "<<TotalProfit<<endl;
-    cout<<"solution vector: ";
+    cout<<"solution vector: \n";
     for(i=1;i<=n;i++)
     {
-    	cout<<setprecision(1)<<Solution_Set[i]<<' ';
+    	cout<<"item"<<i<<" : "<<setprecision(1)<<Solution_Set[i]<<'\n';
     }
 
 }
+/*
+5 60
+5 30
+10 40
+15 45
+22 77
+25 90
+
+output:
+TotalProfit : 230
+solution vector: 
+item1 : 1
+item2 : 1
+item3 : 0
+item4 : 0.9
+item5 : 1
+
+
+*/
