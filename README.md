@@ -4,9 +4,9 @@
 
 2.Merge sort using divide & conquer
 
-3.Quick sort using divide & conquer
+3.maximum subarray using using divide & conquer  
 
-4.maximum subarray using using divide & conquer
+4.Quick sort using divide & conquer
 
 
 5.Heapsort,Construct Max/Min Heap using Heapify method
