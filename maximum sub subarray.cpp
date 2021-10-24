@@ -11,9 +11,10 @@ int max_cross_subarray(int a[],int low,int mid,int high)
     for (i=mid; i>=low; i--)
     {
         sum = sum+a[i];
-        if (sum>left_sum)
+        if (sum>left_sum){
             left_sum = sum;
             max_left=i;
+        }
     }
 
     int right_sum = INT_MIN;
@@ -23,9 +24,10 @@ int max_cross_subarray(int a[],int low,int mid,int high)
      for (j=mid+1; j<=high; j++)
      {
            sum=sum+a[j];
-           if (sum>right_sum)
+           if (sum>right_sum){
                right_sum = sum;
                max_right=j;
+           }
      }
 
     return (max_left,max_right,left_sum+right_sum);
