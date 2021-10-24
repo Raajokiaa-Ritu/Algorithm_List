@@ -65,10 +65,6 @@ void print_Array(int array[])
 
 int main()
 {
-#ifndef ONLINE_JUDGE
-    freopen("input.txt","r",stdin);
-    freopen("output.txt","w",stdout);
-#endif
 
     cin>>n;
     int array[n+5];
